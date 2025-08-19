@@ -1,0 +1,161 @@
+/******************************************************************************
+
+                              Online C++ Compiler.
+               Code, Compile, Run and Debug C++ program online.
+Write your code in this editor and press "Run" button to compile and execute it.
+
+*******************************************************************************/
+
+#include <iostream>
+#include<unordered_map>
+#include <algorithm>
+#include <vector>
+
+
+//Creating Prefix sum map class
+
+using PrefixSumMap = std::unordered_map<int,int>;
+class PrefixSum
+{
+public:
+
+PrefixSum(std::vector<int>& nums)
+{
+    int sum = 0;
+    //Creating prefix sum map:
+    for(int i = 0;i<nums.size();i++)
+    {
+        sum+=nums[i];
+        
+        objPrefixSumMap[i]=sum;     //Storing sum at given index position to calculate 
+                                    //prefix sum map
+    }
+    
+}
+
+
+int RangeSum(int l , int r)
+{
+    if(l == 0)
+        return objPrefixSumMap[r];
+    return objPrefixSumMap[r] - objPrefixSumMap[l-1]; 
+}
+
+void printPrefixArray()
+{
+    for(const auto&[sum , index] : objPrefixSumMap)
+    {
+        std::cout<<"Index = "<<index<<"\t"<<"Sum = "<<sum<<std::endl;
+    }
+}
+private:
+
+PrefixSumMap objPrefixSumMap;
+
+
+    
+};
+
+int main()
+{
+std::vector<int>objNums {1,2,3,4,5,6,7,8,9,10};
+
+PrefixSum objPS(objNums);
+
+objPS.printPrefixArray();
+
+
+//Query below : 
+std::vector<std::pair<int,int>>obj{
+  {0,1},
+  {0,5},
+  {2,6},
+  {3,7}
+};
+
+
+for(auto&[l,r] : obj)
+{
+   std::cout<<"Sum("<<l<<", "<<r<<")  "<<objPS.RangeSum(l,r)<<std::endl;;
+}
+
+
+    return 0;
+}
+
+
+
+
+#include<iostream>
+#include<vector>
+#include<unordered_map>
+#include<algorithm>
+
+//Longrst subarray with sum k
+std::pair<int,int> maxSumArray()
+{
+    int a[]={10, 5, 2, 7, 1, 9};
+    
+    int k=15;
+    
+    int maxlen = 0, sum = 0;
+    
+    std::unordered_map<int,int>prefixMap;
+    
+    int n = sizeof(a)/sizeof(a[0]);
+    
+    int start = -1, end = -1;
+    
+    for(int i = 0;i<n;i++)
+    {
+        sum+=a[i];
+        
+        if(sum == k)        //If we find sum then need to send lenght
+        {
+            maxlen= std::max(maxlen,i+1);        //returing len i+1
+            
+            start = 0;
+            end = i;
+        }
+        
+        //need to check if sum-k already present in map
+        
+        int rem = sum-k;
+        
+        if(prefixMap.find(rem)!=prefixMap.end()) //If we found remianing element then 
+        //aslo we can have max lenght;
+        {
+            int l = i - prefixMap[rem];
+            
+
+            
+            if(l>maxlen)
+            {
+            maxlen =  l;
+            start =  prefixMap[rem] + 1;
+            
+            end = i;
+            
+            }
+
+        }
+        
+        //If we dont found remianing sum or k then we need to hash sum into hashmap
+        
+        
+        if(prefixMap.find(sum) == prefixMap.end())
+        {
+            prefixMap[sum] = i;
+        }
+    }
+    
+return {start,end};
+}
+
+
+int main()
+{
+    const auto&[i , j] = maxSumArray();
+    std::cout<<i<<"\t"<<j;
+    return 0;
+}

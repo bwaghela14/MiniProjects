@@ -1,0 +1,197 @@
+/******************************************************************************
+
+                              Online C++ Compiler.
+               Code, Compile, Run and Debug C++ program online.
+Write your code in this editor and press "Run" button to compile and execute it.
+
+*******************************************************************************/
+
+#include <iostream>
+#include <memory>
+#include <vector>
+#include<string>
+
+class A 
+{
+public:
+
+A()
+{
+    std::cout<<"A constrcutor"<<std::endl;
+}
+~A()
+{
+    std::cout<<"A Destrcutor"<<std::endl;    
+}
+
+A(const A& other)
+{
+     std::cout<<"A Copy constrcutor"<<std::endl;   
+}
+
+A& operator=(const A& other)
+{
+     std::cout<<"A Copy assignemt operator"<<std::endl;
+     return *this;
+}
+
+
+A(A&& other)noexcept
+{
+    std::cout<<"Move construtor"<<std::endl;
+}
+
+void show()
+{
+    std::cout<<"Show function"<<std::endl;
+}
+
+private:
+
+
+};
+
+void takeByValue(std::unique_ptr<A>obj)
+{
+    std::cout<<"inside takeByValue"<<std::endl;
+    if(obj)
+    {
+        obj->show();
+    }
+    else
+    {
+        std::cout<<"Take by value still nullprt"<<std::endl;
+    }
+    std::cout<<"Exiting takeByValue"<<std::endl;
+}
+
+void takeByRefernce(std::unique_ptr<A>&& obj)
+{
+    std::cout<<"inside takeByRefernce"<<std::endl;
+    
+    if(obj)
+    {
+        std::cout<<"Take by reernce not  nullptr , need to remove locally in function"<<std::endl;
+    }
+    
+    std::unique_ptr<A>obj2 = std::move(obj);        //Will call move contructor
+    
+    if(obj2)
+    {
+        std::cout<<"After local move in Function of Ref"<<std::endl;
+        obj2->show();
+    }
+    
+    std::cout<<"Exiting takeByRefernce"<<std::endl;
+}
+
+int add(int a , int b)
+{
+    std::cout<<"Pass by value"<<std::endl;
+    return a+b;
+}
+int add(const int &a , const int &b)
+{
+    std::cout<<"Pass by reernce"<<std::endl;
+    return a+b;
+}
+
+int add(const int *a,const int *b)
+{
+    std::cout<<"Pass by pointer"<<std::endl;
+    return (*a)+(*b);
+}
+
+int add(int&& a ,int&& b)
+{
+    std::cout<<"Pass by Rvalue Refeerce"<<std::endl;
+    return a+b;
+}
+int main()
+{
+
+    std::unique_ptr<A>objMain = std::make_unique<A>();
+    
+    if(objMain)
+    {
+    std::cout <<"Inside main not nullptr"<<std::endl;
+    objMain->show();
+    }
+    
+    takeByValue(std::move(objMain));
+    
+    if(!objMain)std::cout<<"Now became null after takeByValue"<<std::endl;
+    
+    std::cout<<std::endl;
+    
+    std::unique_ptr<A>objRef = std::make_unique<A>();
+    takeByRefernce(std::move(objRef));
+    
+    A a1;
+    
+    a1.show();
+    
+    std::cout<< "Address of A1"<<&a1<<std::endl;
+    
+    A a2 = std::move(a1);
+    
+    if(&a1 == nullptr)
+    {
+        std::cout<<" a1 is null"<<std::endl;
+    }
+    std::cout<< "Address of A2"<<&a2<<std::endl; 
+    a2.show();
+    
+    
+    
+    int a = 5;
+    int& b = a;
+    
+    int&&c = std::move(a);
+    std::cout<<c<<std::endl;
+    
+    std::cout<<a<<"\t"<<b<<std::endl;
+    c= 8;
+    
+    std::cout<<c<<std::endl;
+    
+    std::cout<<a<<"\t"<<b<<std::endl;
+    
+    std::vector<int>objVec{1,2,3,4,5};
+    
+    std::vector<int>objVc2;
+    
+    
+    objVc2 = std::move(objVec);
+    
+    if(objVec.empty())
+    {
+        std::cout<<"objVecis nullptr"<<std::endl;
+    }
+    
+    
+    for(auto it: objVc2)
+    {
+        std::cout<<it<<"\t";
+    }
+    
+    
+int a11 = 5 , b11 = 10;
+
+   int add0 = add(5 , 10);      //P:ass by value
+    
+   int add1 = add(a11 , b11);   //Pass by cobst lvalue Refeerce
+    
+    
+    int add2 = add(&a11 , &b11); //Pass by pointer
+    
+    
+    int add3 = add(std::move(a11),std::move(b11));  //:Pass by Rvalue Refeerce
+    
+    
+    
+    
+    
+    
+    return 0;
+}

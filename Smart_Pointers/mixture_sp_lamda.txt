@@ -1,0 +1,231 @@
+/******************************************************************************
+
+                              Online C++ Compiler.
+               Code, Compile, Run and Debug C++ program online.
+Write your code in this editor and press "Run" button to compile and execute it.
+
+*******************************************************************************/
+
+#include <iostream>
+#include <memory>
+#include <functional>
+#include <unordered_map>
+
+class Base
+{
+    public:
+    
+    Base()
+    {
+        std::cout<<"Base Constr"<<std::endl;
+    }
+    
+    virtual ~Base()
+    {
+        std::cout<<"Base Destrctor"<<std::endl;
+    }
+    
+    virtual void show() = 0;
+    private:
+    
+    
+};
+
+class A : public Base 
+{
+    
+public:
+A(int i = 0 ,int j = 0):a(i),b(j)
+{
+    std::cout<<"Cnstr A  "<<i<<"\t"<<j<<std::endl;    
+}
+~A()
+{
+    std::cout<<"Destrctr A"<<std::endl;
+}
+
+void show()override
+{
+    std::cout<<"A Show"<<std::endl;
+}
+private:
+
+int a;
+int b;
+
+    
+};
+
+class D : public Base
+{
+    
+public:
+D(int i = 0 ,int j = 0):a(i),b(j)
+{
+    std::cout<<"Cnstr D  "<<i<<"\t"<<j<<std::endl;    
+}
+~D()
+{
+    std::cout<<"Destrctr D"<<std::endl;
+}
+
+void show()override
+{
+    std::cout<<"show D"<<std::endl;
+}
+private:
+
+int a;
+int b;
+
+    
+};
+
+class B: public Base
+{
+    
+public:
+B(int i = 0 ,int j = 0):a(i),b(j)
+{
+    std::cout<<"Cnstr b  "<<i<<"\t"<<j<<std::endl;    
+}
+~B()
+{
+    std::cout<<"Destrctr B"<<std::endl;
+}
+
+void show()override
+{
+    std::cout<<"B Show"<<std::endl;
+}
+private:
+
+int a;
+int b;
+
+    
+};
+
+class C: public Base
+{
+    
+public:
+C(int i = 0 ,int j = 0):a(i),b(j)
+{
+    std::cout<<"Cnstr C  "<<i<<"\t"<<j<<std::endl;    
+}
+~C()
+{
+    std::cout<<"Destrctr C"<<std::endl;
+}
+
+void show()override
+{
+    std::cout<<"show C"<<std::endl;
+}
+private:
+
+int a;
+int b;
+
+    
+};
+
+using CharFunc = std::function<void(int,int)>;
+
+//Template Fucntion
+
+template <typename T>
+CharFunc makeFactory(std::unique_ptr<Base>&objPtr) //Passed by refernce to use same objPtr
+{
+    //this make fatory return lambada whihc will be stroed in Map of char;
+    
+    return [&objPtr](int x,int y)->void     //Captures here again with objPtr with Refernce as objPtr is still local in makeFactory
+    {
+      objPtr = std::make_unique<T>(x,y);  
+    };
+}
+
+//Below functin takes ownership of resource
+
+std::vector<std::unique_ptr<Base>>objVec;
+
+void takeOwnerShip(std::unique_ptr<Base>objBase)
+{
+objVec.emplace_back(std::move(objBase));    
+}
+
+int main()
+{
+
+    
+    std::unordered_map<char,CharFunc>objMap;
+    
+    std::unique_ptr<Base>objPtr = nullptr;
+    
+    // objMap['A'] = [&objPtr](int x, int y)->void
+    // {
+    //     objPtr = std::make_unique<A>(x,y);
+    // };
+    
+    // objMap['B'] = [&objPtr](int x, int y )->void
+    // {
+    //   objPtr = std::make_unique<B>(x,y);  
+    // };
+    
+    // objMap['C'] = [&objPtr](int x, int y)->void
+    // {
+    //     objPtr = std::make_unique<C>(x,y);
+    // };
+    
+    // objMap['D'] = [&objPtr](int x, int y)->void
+    // {
+    //     objPtr = std::make_unique<D>(x,y);
+        
+        
+    // };
+    
+    objMap['A']  = makeFactory<A>(objPtr);
+    objMap['B'] = makeFactory<B>(objPtr);
+    objMap['C'] = makeFactory<C>(objPtr);
+    objMap['D'] = makeFactory<D>(objPtr);
+
+    while(true)
+    {
+        std::cout<<"Enter Alphabet A-D for work and Q for quit"<<std::endl;
+    
+    char c;
+    std::cin>>c;        
+        if(c=='Q')break;
+        
+        if(objMap.count(c))
+        {
+        objMap[c](10,20);
+        
+        takeOwnerShip(std::move(objPtr));
+        
+            std::cout << "After takeOwnership(), objPtr is "
+              << (objPtr ? "NOT null" : "null") << "\n";
+        }
+        else
+        {
+        std::cout<<"Char not present in map please enter A-D"<<std::endl;
+        }
+    }
+    
+
+         for(const auto& obj : objVec)
+         {
+                 
+            if(obj)
+            {
+                obj->show();
+            }
+            else
+            {
+                std::cout<<"objPtr is still nullptr"<<std::endl;
+            }
+         }
+    
+    return 0;
+}

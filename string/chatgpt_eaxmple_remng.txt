@@ -1,0 +1,56 @@
+🔹 7. Remove vowels from a string
+cpp
+Copy
+Edit
+std::string removeVowels(const std::string& s) {
+    std::string res;
+    for (char ch : s) {
+        if (std::string("aeiouAEIOU").find(ch) == std::string::npos)
+            res += ch;
+    }
+    return res;
+}
+🔹 8. Longest substring without repeating characters
+(Sliding window technique)
+
+cpp
+Copy
+Edit
+int lengthOfLongestSubstring(const std::string& s) {
+    std::unordered_map<char, int> map;
+    int start = 0, maxLen = 0;
+    for (int end = 0; end < s.length(); ++end) {
+        if (map.count(s[end]))
+            start = std::max(start, map[s[end]] + 1);
+        map[s[end]] = end;
+        maxLen = std::max(maxLen, end - start + 1);
+    }
+    return maxLen;
+}
+🔹 9. Convert string to integer (like stoi)
+cpp
+Copy
+Edit
+int stringToInt(const std::string& s) {
+    int num = 0, i = 0, sign = 1;
+    if (s[i] == '-') { sign = -1; i++; }
+    for (; i < s.length(); i++) {
+        if (!isdigit(s[i])) break;
+        num = num * 10 + (s[i] - '0');
+    }
+    return num * sign;
+}
+🔹 10. Compress a string (e.g., aabcc → a2b1c2)
+cpp
+Copy
+Edit
+std::string compress(const std::string& s) {
+    std::string res;
+    for (int i = 0; i < s.length(); ) {
+        char ch = s[i];
+        int count = 0;
+        while (i < s.length() && s[i] == ch) { i++; count++; }
+        res += ch + std::to_string(count);
+    }
+    return res;
+}

@@ -1,0 +1,168 @@
+/******************************************************************************
+
+                              Online C++ Compiler.
+               Code, Compile, Run and Debug C++ program online.
+Write your code in this editor and press "Run" button to compile and execute it.
+
+*******************************************************************************/
+
+#include <iostream>
+class Base
+{
+    
+ public:
+ int iBasePublic;
+ 
+ Base()
+ {
+    //  std::cout<<"Base Constructor"<<std::endl;
+ }
+ void func1()
+ {
+     std::cout<<"Base Fun1 : non virtual"<<std::endl;
+ }
+ 
+ virtual void func2()
+ {
+     std::cout<<"Base Fun2 : virtual"<<std::endl;
+ }
+ 
+  virtual void derivedOnlyFunc()
+ {
+     std::cout<<"Base derivedOnlyFunc :"<<std::endl;
+ }
+ 
+ virtual ~Base()
+ {
+    //  std::cout<<"Virtual Base Destructor"<<std::endl;
+ }
+
+protected : 
+ int iBaseprotected;
+ private:
+  int iBaseprivate;
+ 
+ 
+};
+
+class Derived : public Base
+{
+public:
+int iDerivedPublic;
+
+Derived()
+{
+    // std::cout<<"Derived Cnstr"<<std::endl;
+}
+
+ void func1()
+ {
+     std::cout<<"Derived Fun1 : non virtual"<<std::endl;
+ }
+ 
+ void func2()override
+ {
+     std::cout<<"Derived Fun 2 : Virtual "<<std::endl;
+ }
+ 
+ void derivedOnlyFunc()
+ {
+     std::cout<<"derivedOnlyFunc :"<<std::endl;
+ }
+ 
+ virtual ~Derived()override
+ {
+    //  std::cout<<"Dervied Destrtr"<<std::endl;
+ }
+protected : 
+ int iDerivedprotected;
+ private:
+  int iDerivedprivate;
+};
+
+class Unrelated
+{
+    public:
+    Unrelated()
+    {
+        std::cout<<"Unrelated called"<<std::endl;
+    }
+    private:
+    
+};
+
+
+
+int main()
+{
+    
+    // Base* ptr = new Base();
+    // // ptr->func1();
+    // // ptr->func2();
+    // // ptr->derivedOnlyFunc();
+    
+    // Derived *dptr = new Derived();
+    // // dptr->func1();
+    // // dptr->func2();
+    // // dptr->derivedOnlyFunc();
+    
+    // Base* bptr = new Derived();
+    // // bptr->func1();  // Which version?
+    // // bptr->func2();  // Which version?
+    // // bptr->derivedOnlyFunc();
+    
+    // Base& b = *ptr;
+    // try
+    // {
+    // Derived& dCastFaile = dynamic_cast<Derived&>(b);
+    // dCastFaile.derivedOnlyFunc();
+    // }
+    // catch(std::bad_cast &ex)
+    // {
+    //     std::cout<<"Caught Exception    "<<ex.what()<<std::endl;
+    // }
+
+    // // dCastFaile->derivedOnlyFunc();
+    // // if(!dCastFaile)
+    // // {
+    // //     std::cout<<"DCast failed and return null pointer"<<std::endl;
+    // // }
+    
+    // Derived *dCastPass = dynamic_cast<Derived*>(bptr);
+    
+    // if(dCastPass)
+    // {
+    //     std::cout<<"Inside dCastPass"<<std::endl;
+    //     dCastPass->derivedOnlyFunc();
+    // }
+    
+    // std::cout<<"Size of Base =  "<<sizeof(Base)<<std::endl;
+    // std::cout<<"Size of Derived =  "<<sizeof(Derived)<<std::endl;
+    // delete ptr;
+    // delete dptr;
+    // delete bptr;
+int a = 10;
+
+int& x = a;
+
+a = 20;
+
+int y = 40;
+int b =90;
+std::cout<<a<<"\t"<<x<<std::endl;
+
+x = 50;
+std::cout<<a<<"\t"<<x<<std::endl;
+
+x = y;
+
+// &x = b;
+int *ptr = &b;
+std::cout<<a<<"\t"<<x<<std::endl;
+
+ptr=&a;
+
+
+std::cout<<ptr<<"\t"<<&b<<"\t"<<*ptr<<"\t"<<&ptr<<std::endl;
+    return 0;
+}

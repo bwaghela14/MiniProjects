@@ -1,0 +1,116 @@
+#include<iostream>
+#include<vector>
+#include<memory>
+
+
+class MyClass
+{
+  public:
+  
+  MyClass(int val =0 ):value(val)
+  {
+      
+  }
+  
+  ~MyClass() = default;
+  
+  void show()
+  {
+      std::cout<<"Value is ="<<value<<std::endl;
+  }
+  private:
+  
+  int value;
+    
+};
+int main()
+{
+    std::unique_ptr<int>ptr = std::make_unique<int>(10);
+    
+    std::cout<<"Value at ptr is "<<*ptr<<std::endl;
+    
+    
+    
+    // Transfer ownership with unique_ptr
+    
+    std::unique_ptr<int>ptr2 = std::move(ptr);
+ 
+    
+    if(ptr2 == nullptr)
+    {
+        std::cout<<"Ptr2 is null"<<std::endl;
+    }
+    else
+    {
+        std::cout<<"Ptrr2 is not null"<<std::endl;
+    }
+    
+        if(ptr == nullptr)
+    {
+        std::cout<<"Ptr is null"<<std::endl;
+    }
+    else
+    {
+        std::cout<<"Ptrr is not null"<<std::endl;
+    }
+    
+    ptr.reset(new int(100));
+    
+    std::cout<<"value of ptr "<<*ptr<<std::endl;
+    
+    //Demonstrate Share ptr;
+    
+    std::shared_ptr<int>sPtr = std::make_shared<int>(12);
+    std::shared_ptr<int>sPtr2 = sPtr;
+    
+    std::cout<<"same memory pointed by 2 differnt shared ptr variable  "<<*sPtr<<"\t"<<
+    *sPtr2<<std::endl;
+    
+    std::cout<<"Referce count is = "<<sPtr.use_count()<<std::endl;
+    
+    std::shared_ptr<MyClass>sPtrClass = std::make_shared<MyClass>(23);
+    std::shared_ptr<MyClass>sPtrClass2 = sPtrClass;
+    
+    sPtrClass->show();
+    
+
+    
+    std::cout<<"2nd show"<<std::endl;
+    sPtrClass2->show();
+
+    MyClass *ptr3 = sPtrClass.get();
+    MyClass *ptr4 = sPtrClass2.get();  
+    
+    
+    if(ptr3 == ptr4)
+    std::cout<<"Hence proved shared pointer points tp same memory locaion"<<std::endl;
+    
+    std::cout<<"ptr3 = "<<ptr3<<"  ptr4 = "<<ptr4<<std::endl;
+    
+   sPtrClass.reset();
+   
+   std::cout<<"Ref count of myclass  "<<sPtrClass.use_count()<<std::endl;
+   
+   
+   //Unique ptr with release function:
+   
+   
+   std::unique_ptr<MyClass>ptr6 = std::make_unique<MyClass>(90);
+   
+   ptr6->show();
+   
+//   MyClass *obj =ptr6.get();
+    MyClass *obj =ptr6.release();
+    
+    if(ptr6==nullptr)
+    std::cout<<"ptr6 is null"<<std::endl;
+    
+    std::cout<<obj<<std::endl;
+    
+//   obj->show();
+
+
+//Circular Reference issue : 
+    
+    return 0;
+}

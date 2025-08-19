@@ -1,0 +1,68 @@
+/******************************************************************************
+
+                              Online C++ Compiler.
+               Code, Compile, Run and Debug C++ program online.
+Write your code in this editor and press "Run" button to compile and execute it.
+
+*******************************************************************************/
+
+#include <iostream>
+#include <algorithm>
+#include <string>
+#include <vector>
+
+
+std::string ConvertDecimalToBinary(int n)
+{
+
+    std::string binary;
+    if(n == 0)
+    return binary = "0";
+
+    while(n!=0)
+    {
+        // binary+= n%2 ? '1' :'0' ;
+        // n/=2;
+        binary+= n&1 ? '1' :'0' ;
+        n>>=1;
+    }
+    
+    std::reverse(binary.begin(),binary.end());
+    return binary;
+}
+
+
+int convertBinaryToDEcimal(std::string &s)
+{
+    int num = 0 , p2 = 1;
+    
+    for(int i = (s.size() - 1);i>=0;i--)
+    {
+        if(s[i] == '1')
+            num = num+p2;
+        p2*=2;
+    }
+    
+    
+    return num;
+}
+
+int main()
+{
+    int n = 1;
+    do 
+    {
+    std::cout<<"\nEnter Number"<<std::endl;
+    std::cin>>n;
+    
+    if(n ==0)break;
+    std::string binary = ConvertDecimalToBinary(n);
+    std::cout<<"binary = "<<binary<<std::endl;
+    
+    int num = convertBinaryToDEcimal(binary);
+    std::cout<<"converted nm = "<<num;  
+    }
+    while(n!=0);
+
+    return 0;
+}

@@ -1,0 +1,76 @@
+/******************************************************************************
+
+                              Online C++ Compiler.
+               Code, Compile, Run and Debug C++ program online.
+Write your code in this editor and press "Run" button to compile and execute it.
+
+*******************************************************************************/
+
+
+// Let me know if you want to explore:
+
+// Initialization order
+
+// Member initializer list vs assigning in constructor body
+
+// Constructors in inheritance
+
+// These are important for mastering C++ object behavior.
+
+
+//  Let Me Know If You Want:
+// Constructor overloading
+
+// Copy/move constructors
+
+// Class inheritance and constructor chaining
+
+// Static data member initialization
+
+// Defaulted and deleted constructors in modern C++
+
+// You're doing great — keep building!
+
+
+#include <iostream>
+class A
+{
+    public:
+    
+    A(int x= 0 ,int y = 0):a(x),b(y)
+    {
+        std::cout<<"Constructor called"<<std::endl;
+    }
+    
+    int getA()const
+    {
+        return a;
+    }
+    
+    int getB()const
+    {
+        return b;
+    }
+    
+    void display()const
+    {
+        std::cout<<a<<"\t"<<b<<std::endl;
+    }
+    private:
+    
+    int a;
+    int b;
+};
+
+int main()
+{
+A objA;
+
+objA.display();
+
+A objB(100,200);
+
+objB.display();
+
+    return 0;
+}

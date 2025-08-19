@@ -1,0 +1,73 @@
+
+struct Node
+{
+    int x;
+    Node* next;
+
+    Node(int data)
+    {
+        x=data;
+        next = nullptr;
+    }
+
+    ~Node() = default;
+};
+class LinkedListStack 
+{
+public:
+    LinkedListStack() : head(nullptr)
+    {
+    
+    }
+    
+    void push(int x) 
+    {
+        Node *newNode = new Node(x);
+        newNode->next = head;
+        head = newNode;
+   
+    }
+    
+    int pop() 
+    {
+        if(head == NULL)
+        {
+         return -1;   
+        }
+
+        int data = head->x;
+
+        Node *tmp = head;
+        head = head->next;
+        delete tmp;
+        return data;
+    }
+    
+    int top()
+    {
+        if(head == NULL)
+        {
+             return -1;   
+        }
+
+        return head->x;
+    }
+    
+    bool isEmpty() 
+    {
+  return head==nullptr;
+    }
+
+    ~LinkedListStack()
+    {
+        while(head!=nullptr)
+        {
+            Node *temp = head;
+            head = head->next;
+            delete temp;
+        }
+    }
+
+    private:
+    Node *head; //Top of stack...
+};

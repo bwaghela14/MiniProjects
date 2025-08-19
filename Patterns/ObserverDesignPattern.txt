@@ -1,0 +1,157 @@
+#include<iostream>
+#include<vector>
+#include<memory>
+#include <algorithm>
+#include <string>
+
+class IObserver
+{
+  public:
+  
+    IObserver(const std::string& name):m_sSubscriberName(name)
+    {
+            std::cout<<"IObserver"<<std::endl;
+    }
+    
+    virtual void update(int data) = 0;
+  
+    std::string getObserverName()const
+    {
+        return m_sSubscriberName;
+    }
+    
+    virtual ~IObserver() = default;
+  
+  private :
+        std::string m_sSubscriberName;
+};
+
+
+class ConcreteObserver1 : public IObserver
+{
+    public:
+    
+    ConcreteObserver1(const std::string& name):IObserver(name)
+    {
+    std::cout<<"ConcreteObserver1"<<std::endl;   
+    }
+    void update(int data)
+    {
+        std::cout<<"ConcreteObserver1 update    "<<data<<std::endl;
+    }
+
+~ConcreteObserver1()
+{
+    std::cout<<"~ConcreteObserver1"<<std::endl;
+}
+    
+};
+
+class ConcreteObserver2 : public IObserver
+{
+    public:
+    ConcreteObserver2(const std::string& name):IObserver(name) 
+    {
+        std::cout<<"ConcreteObserver2"<<std::endl;
+    }
+    void update(int data)
+    {
+        std::cout<<"ConcreteObserver2 update   "<<data<<std::endl;
+    }
+    
+    ~ConcreteObserver2()
+    {
+        std::cout<<"~ConcreteObserver2"<<std::endl;
+    }
+};
+
+class ISubject
+{
+    public:
+    
+    virtual void addObserver(std::shared_ptr<IObserver> observer) = 0;
+    virtual void removeObserver(std::shared_ptr<IObserver>observer) = 0;
+    virtual void notify(int iData) = 0;
+    
+    virtual ~ISubject() = default;
+    
+
+};
+
+class BowlingPublisher :  public ISubject
+{
+    public:
+    
+    void addObserver(std::shared_ptr<IObserver>observer)override
+    {
+        std::cout<<"addObserver"<<std::endl;
+        observers.push_back(observer);
+    }
+    
+    void removeObserver(std::shared_ptr<IObserver>observer)override
+    {
+        if(observers.size()>0)
+        {
+            auto it = std::find(observers.begin(),observers.end(),observer);
+            
+            if(it!=observers.end())
+            observers.erase(it);
+        }
+    }
+    
+    void notify(int data)override
+    {
+        for(auto it : observers)
+        {
+            it->update(data);
+        }
+    }
+    
+    int getObserverSize()const
+    {
+        return observers.size();
+    }
+    
+    ~BowlingPublisher()
+    {
+        std::cout<<"~BowlingPublisher "<<std::endl;
+    }
+    
+    protected:
+    std::vector<std::shared_ptr<IObserver>>observers;
+
+};
+
+int main()
+{
+    
+    std::shared_ptr<ISubject>sPtr = std::make_shared<BowlingPublisher>();
+
+    
+    std::shared_ptr<IObserver>observer1 =std::make_shared<ConcreteObserver1>("Observer 1");
+    std::shared_ptr<IObserver>observer2 =std::make_shared<ConcreteObserver2>("observer2");
+    
+    sPtr->addObserver(observer1);
+    sPtr->addObserver(observer2);
+
+   
+    int i = 0;
+    for(;i<10;i++)
+    {
+        sPtr->notify(i);
+    }
+    
+    
+    if(i ==10)
+    {
+        sPtr->removeObserver(observer1);
+        sPtr->removeObserver(observer2);
+    }
+    
+    int iSize = dynamic_cast<BowlingPublisher*>(sPtr.get())->getObserverSize();    //dynamic_cast is used with raw pointer sor efrence only
+    
+    std::cout<<"Size = "<<iSize<<std::endl;
+    
+    return 0;
+    
+}

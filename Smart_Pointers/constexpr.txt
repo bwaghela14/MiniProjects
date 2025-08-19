@@ -1,0 +1,44 @@
+/******************************************************************************
+
+Welcome to GDB Online.
+GDB online is an online compiler and debugger tool for C, C++, Python, Java, PHP, Ruby, Perl,
+C#, OCaml, VB, Swift, Pascal, Fortran, Haskell, Objective-C, Assembly, HTML, CSS, JS, SQLite, Prolog.
+Code, Compile, Run and Debug online from anywhere in world.
+
+*******************************************************************************/
+#include <iostream>
+#include <array>
+
+constexpr int add(int i , int j)
+{
+    return i+j;
+}
+
+int main()
+{
+//   constexpr int x = 5 , y= 10;
+//   constexpr 
+constexpr int x = 5 , y= 10;
+constexpr int result = add(x,y);
+ 
+ std::cout<<result<<std::endl;
+
+// std::array<int,result>a{0};
+// int a[result] = {0};
+
+// for(auto it:a )
+// std::cout<<it<<"\t";
+
+    return 0;
+}
+
+
+template<typename T>
+void printType(T value) {
+    if constexpr (std::is_integral<T>::value)
+        std::cout << "Integral\n";
+    else if constexpr (std::is_floating_point<T>::value)
+        std::cout << "Floating point\n";
+    else
+        std::cout << "Other type\n";
+}

@@ -1,0 +1,50 @@
+#include<set>
+#include<map>
+#include<unordered_map>
+#include<iostream>
+#include<unordered_set>
+
+int main()
+{
+    //Remove duplicate from array;
+    
+    int a[] = {1,2,3,3,2,1,4,4,5,5,6,6,6};
+    
+    int n =sizeof(a)/sizeof(a[0]);
+    
+    std::set<int>st(a,a+n);
+    
+    for(auto it : st)
+    std::cout<<it<<"\t";
+    std::cout<<std::endl;
+    
+    std::multiset<int>mst(a, a+n);
+    
+    for(auto it : st)
+    std::cout<<"Frequency of it = "<<it <<"\t"<<mst.count(it)<<std::endl;
+    
+    //Check if two arrays have at least one common element
+    
+    std::unordered_multiset<int>umst;
+    
+    int b[] = {1,2,3,4,5,6};
+    
+    int nsize = sizeof(b)/sizeof(b[0]);
+    for(int i = 0;i<nsize;i++)
+    umst.insert(b[i]);
+    
+    
+    int c[] = {7,8,9,10,11,5};
+    
+    nsize = sizeof(c)/sizeof(c[0]);
+    for(int i = 0;i<nsize;i++)
+    umst.insert(c[i]);
+    
+    for(auto it : umst)
+    
+    if(umst.count(it) >1)
+    
+    std::cout<<"repeetd numer is  "<<it<<std::endl;
+    
+    return 0;
+}

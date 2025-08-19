@@ -1,0 +1,231 @@
+/******************************************************************************
+
+                              Online C++ Compiler.
+               Code, Compile, Run and Debug C++ program online.
+Write your code in this editor and press "Run" button to compile and execute it.
+
+*******************************************************************************/
+
+#include <iostream>
+#include<list>
+#include<vector>
+#include<unordered_map>
+#include<unordered_set>
+#include<algorithm>
+#include <numeric>
+#include<sstream>
+#include<chrono>
+
+int main()
+{
+    
+    std::list<int>objList{1,2,3,4,5,10,15,20,21,22};
+
+std::for_each(objList.begin(),objList.end(),[](int x)
+{
+    if(x%5 == 0)
+    std::cout<<"x = "<<x<<"\t";
+});
+
+
+auto it= std::min_element(objList.begin(),objList.end());
+std::cout<<"min element = "<<*it<<std::endl;
+
+auto it2 = std::max_element(objList.begin(),objList.end());
+std::cout<<"Max Element = "<<*it2<<std::endl;
+
+//sum of all digits of a number
+int i = 9999999;
+int n = i;
+std::vector<int>digits;
+while(i>0)
+{
+    digits.emplace_back(i%10);
+    i/=10;
+}
+std::reverse(digits.begin(),digits.end());
+
+
+int sum = std::accumulate(digits.begin(),digits.end(),0);
+
+std::cout<<"sum = "<<sum<<std::endl;
+
+
+//Fibinaci series
+int a = 0, b=1;
+
+std::cout<<a<<" "<<b;
+
+int fibEnd = 10;
+int fibSum = 0;
+for(int i = 2;i<fibEnd;i++)
+{
+    fibSum = a+b;
+    std::cout<<" "<<fibSum;
+    a=b;
+    b=fibSum;
+}
+
+//Reverse each word of a string
+
+std::string strWords = "Bhavesh Harish Waghela ";
+std::istringstream is(strWords);
+
+auto start = std::chrono::high_resolution_clock::now();
+
+
+std::string words;
+std::string newReverseString;
+while(is>>words)
+{
+    std::reverse(words.begin(),words.end());
+    newReverseString+=words+" ";
+}
+
+if(!newReverseString.empty() && newReverseString.back() == ' ')
+newReverseString.pop_back();
+
+std::cout<<"\n"<<newReverseString<<std::endl;
+auto end = std::chrono::high_resolution_clock::now();
+
+auto duration = std::chrono::duration_cast<std::chrono::microseconds>(end-start);
+
+std::cout<<"Time take without OS stream = "<<duration.count()<<" mocroseconds"<<std::endl;
+
+
+auto start2 = std::chrono::high_resolution_clock::now();
+
+
+std::string strWords2;
+std::ostringstream os;
+
+while(is >> strWords2)
+{
+    os <<strWords2<<" ";
+}
+
+std::string newReverseString2 = os.str();
+
+if(!newReverseString2.empty() && newReverseString2.back() ==' ')
+newReverseString2.pop_back();
+
+std::cout<<"\n"<<newReverseString2<<std::endl;
+
+auto end2 = std::chrono::high_resolution_clock::now();
+
+auto duration2 = std::chrono::duration_cast<std::chrono::microseconds>(end2-start2);
+
+std::cout<<"Time take with OS stream = "<<duration2.count()<<" mocroseconds"<<std::endl;
+
+
+
+//finding common elemnts between 2 arrays
+
+std::vector<int>objVec1{1,2,3,4,5,5,5,7,8,8};
+std::vector<int>objVec2{5,5,6,7,8,8,9,7};
+
+
+std::unordered_map<int,int>objMapFreq;
+
+
+
+//Remove duplicates first
+
+std::sort(objVec1.begin(),objVec1.end());
+std::sort(objVec2.begin(),objVec2.end());
+
+objVec1.erase(std::unique(objVec1.begin(),objVec1.end()),objVec1.end());
+objVec2.erase(std::unique(objVec2.begin(),objVec2.end()),objVec2.end());
+
+
+
+std::cout<<std::endl;
+for(auto it:objVec1)
+{
+    objMapFreq[it]++;    
+}
+/*
+std::vector<int>objCommon;
+for(const auto&[it,count]:objMapFreq)
+{
+    if(count == 2)
+    objCommon.emplace_back(it);
+}
+
+for(auto it: objCommon)
+std::cout<<it<<"\t";
+*/
+std::unordered_set<int>objCommon;
+for(auto it : objVec2)
+{
+    if(objMapFreq.count(it))
+    {
+        objCommon.insert(it);
+    }
+}
+
+for(auto it: objCommon)
+std::cout<<it<<"\t";
+
+
+    return 0;
+}
+
+
+
+#include<unordered_set>
+#include<unordered_map>
+#include <string>
+#include <iostream>
+#include <string>
+#include <algorithm>
+
+int main()
+{
+// Find first repeating character using unordered_map
+
+std::string s ="bbhhaavveesshh";
+
+std::unordered_map<char,int>objMapFreq;
+
+
+//Storing frequncey
+
+for(auto ch : s)
+{
+    if(ch != ' ')
+    objMapFreq[ch]++;
+}
+
+//Chcking if string character count is gretar than 1 
+char firstRepeatCh ;
+for(auto ch : s)
+{
+    if(objMapFreq[ch] > 1)
+    {
+    firstRepeatCh = ch;
+    break;
+    }
+    
+}
+std::cout<<"firstRepeatCh = "<<firstRepeatCh<<std::endl;
+
+
+//Remove punctuation from string
+
+
+std::string sPunc = "!,'bhavesh':!?";
+
+sPunc.erase(std::remove_if(sPunc.begin(),sPunc.end(),[](char ch)
+{
+    return std::ispunct(static_cast<unsigned char>(ch));
+}),sPunc.end());
+
+std::cout<<sPunc<<std::endl;
+
+
+
+
+return 0;
+}
+

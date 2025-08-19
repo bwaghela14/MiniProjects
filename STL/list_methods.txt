@@ -1,0 +1,89 @@
+#include<iostream>
+#include<vector>
+#include<list>
+#include<map>
+#include<unordered_map>
+#include<string>
+#include<algorithm>
+#include<climits>
+
+int main()
+{
+    //Remove all even numebrs
+    std::list<int>lstEven{1,2,3,4,5,6,7,8,9,0};
+    
+    lstEven.remove_if([](int x)
+    {
+        return x%2 == 0;
+    });
+    
+    for(auto it : lstEven)
+    {
+        std::cout<<it<<"\t";
+    }
+    
+    std::cout<<"\n"<<lstEven.size()<<std::endl;
+    //Remove negative number from lsit
+    
+    
+    std::list<int>lstNeg{1,-1,2,-2,3,-3,4,-4,5,-5,0,-0};
+    
+    lstNeg.remove_if([](int x)
+    {
+        return x<0;
+    });
+    
+        for(auto it : lstNeg)
+    {
+        std::cout<<it<<"\t";
+    }
+    std::cout<<"\n"<<lstNeg.size()<<std::endl;    
+    
+    std::list<int>objUnique{1,1,2,2,3,3,4,4,5,5,6,6,-7,-7};
+    objUnique.unique();
+    for(auto it : objUnique)
+    {
+        std::cout<<it<<"\t";
+    }
+    std::cout<<std::endl;
+    std::cout<<objUnique.size()<<std::endl;
+    
+    
+    //Find value and remove it from list
+    
+    std::list<int>lstRemove{1,2,3,4,5,6};
+    lstRemove.remove_if([](int x)
+    {
+        return x == 2;
+    });
+    
+        for(auto it : lstRemove)
+    {
+        std::cout<<it<<"\t";
+    }
+    std::cout<<"\n"<<"list after removal   "<<lstRemove.size()<<std::endl;
+    
+    //Tarverse list using iterator
+    
+    std::list<int>objList{1,2,3,4,5,6,6,5,4,3,2,1};
+    
+    //Insert elements at front, back, and middle using iterators
+    
+    objList.emplace_back(18);
+    objList.push_front(99);
+    objList.push_front(100);
+    
+    std::list<int>::iterator it = objList.begin();
+    
+    std::advance(it,5);
+    objList.insert(it,50);
+    
+    for(it = objList.begin();it!=objList.end();++it)
+    {
+        std::cout<<*it<<"\t";
+    }
+    
+    std::cout<<std::endl;
+    
+    return 0;
+}

@@ -1,0 +1,123 @@
+#include<vector>
+#include<iostream>
+#include<string>
+#include<unordered_map>
+#include <algorithm>
+#include <climits>
+#include <numeric>
+
+
+int main()
+{
+    //Transform negative number to 0
+    
+    std::vector<int>objZero{-1,-2,-3,4,5,6};
+    
+    std::transform(objZero.begin(),objZero.end(),objZero.begin(),[](int x)
+    {
+        return x<0?0:x ; 
+    });
+    
+    
+    for(auto it : objZero)
+    {
+        std::cout<<it<< " ";
+    }
+    
+    std::cout<<std::endl;
+    
+    //Trnaform number to its square
+    
+    std::vector<int>objSquare{1,2,3,4,-5,0};
+    
+    std::transform(objSquare.begin(),objSquare.end(),objSquare.begin(),[](int x)
+    {
+        return (x == 0) ? 0:x*x;
+    });
+    
+    for(auto it : objSquare)
+    {
+        std::cout<<it<< " ";
+    }
+    
+    //Find frequency of a number
+    //and update largest occuring number
+    
+    std::vector<int>objFreq{1,1,1,2,2,2,2,3,3,3,3,3,4,4};
+    
+    std::unordered_map<int,int>objMapFreq;
+    
+    int largest = INT_MIN;
+    for(auto it : objFreq)
+    {
+     objMapFreq[it]++;
+     largest = std::max(largest,it);
+    }
+    
+    std::cout<<"Largets = "<<largest<<std::endl;
+    
+    largest  = INT_MIN;
+    for(auto it : objMapFreq)
+    {
+     largest = std::max(largest,it.second);
+    }
+    std::cout<<"Largets frequency= "<<largest<<std::endl;
+    
+    std::vector<int> objAccum{1,2,3,4};
+    
+    std::cout<<"Accumulate = "<<std::accumulate(objAccum.begin(),objAccum.end(),0)<<std::endl;
+    
+//Rotata vecote by left/Right
+
+std::vector<int>objRotate{1,2,3,4,5,6};
+
+std::rotate(objRotate.begin(),objRotate.begin()+3,objRotate.end()); //left roate by 3
+    
+        for(auto it : objRotate)
+    {
+        std::cout<<it<< " ";
+    }
+    std::cout<<std::endl;
+    
+    std::vector<int>objRotateR{1,2,3,4,5,6};
+
+//right rotate by 5 == n-5 =6-5  = 1 left rotate 
+
+int k = 5;//Right rotate by 5 ,if K > 5 then we need to make it udner size using mode
+
+int size = objRotateR.size();
+
+if(k>size)
+k%=size;
+
+std::rotate(objRotateR.begin(),objRotateR.begin()+(size-k),objRotateR.end()); 
+    
+        for(auto it : objRotateR)
+    {
+        std::cout<<it<< " ";
+    }
+    std::cout<<std::endl;
+    
+    //Find first repeating element
+    std::vector<int>objRotateRepeta{1,2,3,4,5,6,7};
+    
+    std::unordered_map<int,int>objRepeat;
+    
+    for(auto it : objRotateRepeta)
+    {
+        objRepeat[it]++;
+        
+        if(objRepeat[it] > 1)
+        {
+            std::cout<<"First repeat"<<it<<std::endl;
+            break;
+        }
+        else
+        {
+            std::cout<<"No re[peate"<<std::endl;
+        }
+    }
+    
+
+    return 0;
+}

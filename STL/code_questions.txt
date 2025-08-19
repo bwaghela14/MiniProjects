@@ -1,0 +1,166 @@
+Here’s a comprehensive list of important C++ STL-based programs that are frequently asked in coding interviews or assessments. These cover all major STL containers, algorithms, and utilities. I’ve grouped them by topic for clarity.
+
+
+---
+
+🧺 1. Vector-Based Programs
+
+Reverse a vector using std::reverse
+
+Remove duplicates from a vector (using sort, unique)
+
+Rotate vector by k positions
+
+Find the frequency of each element
+
+Sort a vector of pairs by first/second element
+
+Implement a dynamic array using std::vector
+
+Merge two sorted vectors into one sorted vector
+
+
+
+---
+
+📚 2. Set and Multiset Programs
+
+Remove duplicates from an array using std::set
+
+Print all unique elements in a collection
+
+Count frequency of elements using std::multiset
+
+Find the union and intersection of two sets
+
+Check if two arrays have at least one common element
+
+
+
+---
+
+📌 3. Map and Unordered Map Programs
+
+Count frequency of characters in a string using std::map
+
+Find first non-repeating character using unordered_map
+
+Group anagrams using unordered_map
+
+Check if two strings are anagrams
+
+Word count from a sentence using std::map
+
+Find the element with the highest frequency
+
+
+
+---
+
+🎯 4. Stack and Queue Programs
+
+Balanced parentheses checker using std::stack
+
+Evaluate postfix expression
+
+Implement a queue using two stacks
+
+Sliding window maximum using std::deque
+
+Design a stack that supports getMin() in O(1)
+
+Reverse a queue using stack
+
+
+
+---
+
+📊 5. Priority Queue / Heap
+
+Find k largest/smallest elements using std::priority_queue
+
+Merge k sorted arrays
+
+Sort a nearly sorted array
+
+Top K frequent elements
+
+Kth largest/smallest element in an array
+
+
+
+---
+
+🔄 6. Deque-Based Problems
+
+Implement sliding window maximum
+
+Check whether a given sequence is a palindrome using deque
+
+Maintain a moving average over a window of k elements
+
+
+
+---
+
+🧩 7. Pair and Tuple Based
+
+Sort array of pairs based on second value
+
+Grouping elements using tuple (e.g., (name, age, score))
+
+Use tuple to store and access heterogeneous data types
+
+
+
+---
+
+🛠️ 8. Algorithms (from <algorithm>)
+
+sort, find, count, reverse, unique, accumulate, etc.
+
+Find the nth largest element using nth_element
+
+Use partition, stable_partition to rearrange elements
+
+Binary search with lower_bound, upper_bound
+
+Generate all permutations using std::next_permutation
+
+
+
+---
+
+⚙️ 9. Miscellaneous Utility STL Programs
+
+Use std::bitset to count set bits
+
+Use std::array with fixed-size arrays
+
+Lambda functions with STL (e.g., in sort)
+
+Use std::transform for string case conversion
+
+Use std::accumulate to compute sum/product
+
+
+
+---
+
+🧪 10. Real-World Style Mini Programs
+
+Implement a frequency dictionary (word counter)
+
+LRU cache using list + unordered_map
+
+Leaderboard using map + multiset
+
+Contact list auto-suggestion using set
+
+Task scheduler simulation using priority_queue
+
+
+
+---
+
+Would you like me to now start implementing these one by one, or focus on a subset like map-based problems, vector-based programs, or priority_queue-based problems?

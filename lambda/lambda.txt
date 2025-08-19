@@ -1,0 +1,76 @@
+#include<iostream>
+#include<vector>
+#include<algorithm>
+#include<functional>
+
+class Example
+{
+  public:
+  
+  void show()
+  {
+      std::cout<<"Show function"<<std::endl;
+      
+      //Below statement are just stored in  memory but if not called then Lambda will not execute
+      auto lambdaAdd = [this](int i)->int
+      {
+          std::cout<<"Inside lamda"<<std::endl;
+        return  x+i ; 
+      };
+      int x = lambdaAdd(15);
+      
+      std::cout<<"Add  "<<x<<std::endl;
+  }
+  private:
+  
+  int x;
+};
+
+int main()
+{
+    Example obj;
+    obj.show();
+/*
+    int x = 10;
+    
+    //Lambda withut capture.
+    auto addX = [](int a,int b)->int        //Creating some block of statemnt in memeory and 
+   //and  storing it into addX 
+    {
+        return a+b;
+    };
+    int i = addX(5,10);
+    
+    std::cout<<i<<std::endl;
+    
+    int (*fp)(int,int) = addX;
+    
+    std::cout<<"Function Pointer "<<fp(10,10)<<std::endl;
+    
+    std::function<int(int,int)>func = addX;
+    
+    std::cout<<"std::function = "<<func(20,20)<<std::endl;
+    
+    
+    //Lambda with capture....
+    
+    
+    auto capture = [x](int a)->int
+    {
+        return a+x;
+    };
+    
+std::cout<<capture(8)<<std::endl;
+
+auto b1 = capture;
+
+std::cout<<b1(18)<<std::endl;
+
+
+std::function<int(int)>func2 = b1;
+
+std::cout<<func2(28)<<std::endl;
+
+*/
+    return 0;
+}

@@ -1,0 +1,76 @@
+/******************************************************************************
+
+                              Online C++ Compiler.
+               Code, Compile, Run and Debug C++ program online.
+Write your code in this editor and press "Run" button to compile and execute it.
+
+*******************************************************************************/
+
+#include <iostream>
+#include <thread>
+#include <mutex>
+#include <condition_variable>
+#include <chrono>
+#include <queue>
+
+std::mutex mt;
+
+std::condition_variable cv;
+
+std::queue<int>buffer;
+
+const int max_buffer_size = 5;
+
+    int value = 0;
+
+void producer()
+{
+
+        while(true)
+    {
+        std::unique_lock<std::mutex> lk(mt);  
+        
+        cv.wait(lk,[]{return buffer.size() < max_buffer_size;});  //if this condition true then it locks the mutex and go ahed wth producing data for buffer
+//if it is false then condition varible releases the lock and goes for sleep.
+
+        std::cout<<"Produced Data = "<<value<<"\t"<<"Buffer size = "<<buffer.size()<<std::endl;
+        buffer.push(value++);
+        
+        lk.unlock();
+        cv.notify_one();
+        std::this_thread::sleep_for(std::chrono::milliseconds(500));
+        
+    }
+}
+void consumer()
+{
+        while(true)
+    {
+        std::unique_lock<std::mutex> lk(mt);  
+        
+        cv.wait(lk,[]{return !buffer.empty();});  //if this condition true then it locks the mutex and go ahed wth producing data for buffer
+//if it is false then condition varible releases the lock and goes for sleep.
+
+        int iVal = buffer.front();
+        
+        std::cout<<"consumed data = "<<iVal<<std::endl;
+        
+        buffer.pop();
+        
+        lk.unlock();
+        cv.notify_one();
+        std::this_thread::sleep_for(std::chrono::milliseconds(1000));
+        
+    }
+}
+
+int main()
+{
+    std::thread producerThread(producer);
+    std::thread consumerThread(consumer);
+    
+    producerThread.join();
+    consumerThread.join();
+    
+    return 0;
+}

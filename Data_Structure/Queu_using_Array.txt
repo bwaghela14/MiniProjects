@@ -1,0 +1,126 @@
+class ArrayQueue {
+private:
+int m_size;
+int front;
+int rear;
+int *arrayQueue;
+
+public:
+
+
+    ArrayQueue(int size = 100):m_size(size),front(-1),rear(-1)
+    {
+        arrayQueue = new int[size];
+    }
+
+// std::copy(source_begin, source_end, destination);
+
+//Rule of 5
+    ArrayQueue(const ArrayQueue& other):
+    m_size(other.m_size),
+    front(other.front),
+    rear(other.rear),
+    arrayQueue(new int[m_size])
+    {
+        std::copy(other.arrayQueue,other.arrayQueue + m_size,arrayQueue);
+    }
+
+    ArrayQueue& operator = (const ArrayQueue& other)
+    {
+    if(this == &other)return *this;
+        delete []arrayQueue;
+
+    m_size = other.m_size;
+    front = other.front;
+    rear = other.rear;
+    arrayQueue = new int[m_size];
+    
+    std::copy(other.arrayQueue,other.arrayQueue + m_size,arrayQueue);
+    }
+
+//Move construcotr
+    ArrayQueue(ArrayQueue&& other)noexcept
+    :m_size(other.m_size),front(other.front),
+    rear(other.rear),arrayQueue(other.arrayQueue)
+    {
+        other.rear = -1;
+        other.m_size = 0;
+        other.arrayQueue = nullptr;
+    }
+
+//Move assignment operator
+
+ArrayQueue& operator=(ArrayQueue&& other)noexcept
+
+{
+    if(this == &other)return *this;
+    delete []arrayQueue;
+
+// Steal other's resources
+m_size = other.m_size;
+front = other.front;
+rear = other.rear;
+arrayQueue = other.arrayQueue;
+
+// Leave 'other' in a safe state
+    other.m_size = 0;
+    other.front = other.rear = -1;
+    other.arrayQueue = nullptr;
+    return *this;
+}
+    ~ArrayQueue()
+    {
+        delete[] arrayQueue;
+    }
+    
+    void push(int x) 
+    {
+        if(front == (rear+1)%m_size)
+        {
+            std::out_of_range("Stack Overflow");
+            return;
+        }
+        if(front == -1)   //no elements in arrayQueue or first element we wll be entering
+        {
+            front = rear = 0;
+
+        }
+        else
+        {
+            rear = (rear+1)%m_size;
+
+        }
+        arrayQueue[rear] = x;
+    }
+    
+    int pop()
+    {
+        if(front == -1)
+        {
+            std::out_of_range("Queue inderflow");
+            return -1;
+        }
+        int result = arrayQueue[front];
+
+        if(front == rear)   //Means only 1 elemts was thre and yu are removing that only
+        {
+           front = rear = -1; 
+        }
+        else{
+            front = (front+1)%m_size;
+        }
+
+        return result;
+    }
+    
+    int peek()
+    {
+        return arrayQueue[front];
+    
+    }
+    
+    bool isEmpty()
+    { 
+  return front == -1;
+    }
+};

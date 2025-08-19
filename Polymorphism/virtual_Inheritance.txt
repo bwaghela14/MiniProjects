@@ -1,0 +1,105 @@
+#include<iostream>
+
+
+class A
+{
+    public:
+    
+    A()
+    {
+        std::cout<<"A Cons"<<std::endl;
+    }
+    
+    virtual ~A()
+    {
+        std::cout<<"A Dest"<<std::endl;
+    }
+    
+    void show()
+    {
+        std::cout<<"A show"<<std::endl;
+    }
+    
+    protected:
+    
+    private:
+    
+    
+};
+
+class B : virtual public A
+{
+    public:
+    
+    B()
+    {
+        std::cout<<"B Cons"<<std::endl;
+    }
+    
+    virtual ~B()
+    {
+        std::cout<<"B Dest"<<std::endl;
+    }
+    
+    protected:
+    
+    private:
+    
+    
+};
+
+class C :virtual public A
+{
+    public:
+    
+    C()
+    {
+        std::cout<<"c Cons"<<std::endl;
+    }
+    
+    virtual ~C()
+    {
+        std::cout<<"C Dest"<<std::endl;
+    }
+    
+    protected:
+    
+    
+    private:
+    
+};
+
+class D : public B, public C
+{
+    public:
+    
+    D()
+    {
+        std::cout<<"D Cons"<<std::endl;
+    }
+    
+    virtual ~D()
+    {
+        std::cout<<"D Dest"<<std::endl;
+    }
+    
+    
+    protected:
+    
+    private:
+    
+};
+
+
+
+int main()
+{
+    // A aObj;
+    // B bObj;
+    // C cObj;
+    D dObj;
+    
+    dObj.show();
+    
+    return 0;
+}

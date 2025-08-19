@@ -1,0 +1,461 @@
+/******************************************************************************
+
+                              Online C++ Compiler.
+               Code, Compile, Run and Debug C++ program online.
+Write your code in this editor and press "Run" button to compile and execute it.
+
+*******************************************************************************/
+
+#include <iostream>
+#include<unordered_map>
+#include<vector>
+#include<climits>
+#include <string>
+#include<algorithm>
+#include<set>
+#include<unordered_set>
+int main()
+{
+
+std::string s = "Bhavesh Bhavesh bhavesh";
+
+//Count the feequency of char;
+
+std::transform(s.begin(),s.end(),s.begin(),[](unsigned char ch)
+{
+    return std::tolower(ch);
+});
+
+std::unordered_map<char,int>umap;
+
+for(auto ch : s)
+{
+    umap[ch]++;
+}
+
+for(const auto&[ch,count] : umap)
+std::cout<<"Freaqucy of char - "<<ch<<"\t"<<count<<std::endl;
+
+// Find first repeating character using unordered_set
+
+std::unordered_map<char,int>objFreqRepeat;
+std::string repeat = "Bhaves v";
+
+std::unordered_set<char>charSet;
+char repeated;
+for(auto ch : repeat)
+{
+    if(ch ==' ')continue;
+    
+    if(!charSet.count(ch))      //count return 0 or 1
+    charSet.insert(ch);
+    
+    else
+    {
+    repeated = ch;
+    break;        
+    }
+}
+
+std::cout<<"Repeted char is "<<repeated<<std::endl;
+
+// Find first repeating character using unordered_map
+
+std::unordered_map<char,int>umapRepeat;
+std::string umpaString = "Abcdefghi d";
+for(auto ch : umpaString)
+{
+    if(ch == ' ')continue;
+umapRepeat[ch]++;
+    
+}
+
+char repeatedCh;
+for(const auto&[ch,count]: umapRepeat)
+{
+    std::cout<<ch<<"\t"<<count<<std::endl;
+    if(count>1)
+    {
+    repeatedCh = ch;
+    break;
+    }
+}
+ std::cout<<"Rpeted ch using unordered_map is = "<<repeatedCh<<std::endl;
+ 
+ 
+ 
+// Count the number of unique characters in a given String
+ 
+// Find first non-repeating character using unordered_map
+
+std::string sNonRepeat = "bbccdddeeff gghhiijjk";
+
+std::unordered_map<char ,int>objNonRepeat;
+
+for(auto ch : sNonRepeat)
+{
+if(ch == ' ')continue;
+objNonRepeat[ch]++;
+    
+}
+char nonRepeating = '\0';
+for(auto ch:sNonRepeat)
+{
+    if(ch == ' ')continue;
+    if(objNonRepeat[ch] == 1)
+    {
+        nonRepeating = ch;
+        break;
+    }
+}
+
+if(nonRepeating!='\0')
+{
+    std::cout<<"Non repating first char is "<<nonRepeating<<std::endl;
+}
+else
+{
+    std::cout<<"All are repeating"<<std::endl;
+}
+
+
+//check if 2 strings are anagram using map or unordered_map
+
+std::string slisten = "listen";
+std::string slisten2 = "Silent";
+
+if(slisten.size()==slisten2.size())
+{
+        std::transform(slisten.begin(),slisten.end(),slisten.begin(),[](unsigned char ch)
+        {
+          return std::tolower(ch);  
+        });
+        
+        std::transform(slisten2.begin(),slisten2.end(),slisten2.begin(),[](unsigned char ch)
+        {
+            return std::tolower(ch);
+        });
+
+        std::unordered_map<char,int>umapAnagram;
+
+        for(auto ch : slisten)
+        {
+            umapAnagram[ch]++;
+        }
+
+        for(auto ch : slisten2)
+        {
+            if(umapAnagram[ch] == 0)
+            {
+                std::cout<<"No Anagram"<<std::endl;
+                return 0;
+            }
+            umapAnagram[ch]--;
+                
+        }
+        std::cout<<"Anagram"<<std::endl;
+}
+else
+{
+    std::cout<<"Not Anagram size"<<std::endl;
+    return 0;
+}
+
+
+    return 0;
+}
+
+
+
+/******************************************************************************
+
+                              Online C++ Compiler.
+               Code, Compile, Run and Debug C++ program online.
+Write your code in this editor and press "Run" button to compile and execute it.
+
+*******************************************************************************/
+
+#include <iostream>
+#include<unordered_map>
+#include<vector>
+#include<climits>
+#include <string>
+#include<algorithm>
+#include<set>
+#include<unordered_set>
+int main()
+{
+
+std::string s = "Bhavesh Bhavesh bhavesh";
+
+//Count the feequency of char;
+
+std::transform(s.begin(),s.end(),s.begin(),[](unsigned char ch)
+{
+    return std::tolower(ch);
+});
+
+std::unordered_map<char,int>umap;
+
+for(auto ch : s)
+{
+    umap[ch]++;
+}
+
+for(const auto&[ch,count] : umap)
+std::cout<<"Freaqucy of char - "<<ch<<"\t"<<count<<std::endl;
+
+// Find first repeating character using unordered_set
+
+std::unordered_map<char,int>objFreqRepeat;
+std::string repeat = "Bhaves v";
+
+std::unordered_set<char>charSet;
+char repeated;
+for(auto ch : repeat)
+{
+    if(ch ==' ')continue;
+    
+    if(!charSet.count(ch))      //count return 0 or 1
+    charSet.insert(ch);
+    
+    else
+    {
+    repeated = ch;
+    break;        
+    }
+}
+
+std::cout<<"Repeted char is "<<repeated<<std::endl;
+
+// Find first repeating character using unordered_map
+
+std::unordered_map<char,int>umapRepeat;
+std::string umpaString = "Abcdefghi d";
+for(auto ch : umpaString)
+{
+    if(ch == ' ')continue;
+umapRepeat[ch]++;
+    
+}
+
+char repeatedCh;
+for(const auto&[ch,count]: umapRepeat)
+{
+    std::cout<<ch<<"\t"<<count<<std::endl;
+    if(count>1)
+    {
+    repeatedCh = ch;
+    break;
+    }
+}
+ std::cout<<"Rpeted ch using unordered_map is = "<<repeatedCh<<std::endl;
+ 
+ 
+ 
+// Count the number of unique characters in a given String
+ 
+// Find first non-repeating character using unordered_map
+
+std::string sNonRepeat = "bbccdddeeff gghhiijjk";
+
+std::unordered_map<char ,int>objNonRepeat;
+
+for(auto ch : sNonRepeat)
+{
+if(ch == ' ')continue;
+objNonRepeat[ch]++;
+    
+}
+char nonRepeating = '\0';
+for(auto ch:sNonRepeat)
+{
+    if(ch == ' ')continue;
+    if(objNonRepeat[ch] == 1)
+    {
+        nonRepeating = ch;
+        break;
+    }
+}
+
+if(nonRepeating!='\0')
+{
+    std::cout<<"Non repating first char is "<<nonRepeating<<std::endl;
+}
+else
+{
+    std::cout<<"All are repeating"<<std::endl;
+}
+
+
+//check if 2 strings are anagram using map or unordered_map
+
+std::string slisten = "listen";
+std::string slisten2 = "Silent";
+
+if(slisten.size()==slisten2.size())
+{
+        std::transform(slisten.begin(),slisten.end(),slisten.begin(),[](unsigned char ch)
+        {
+          return std::tolower(ch);  
+        });
+        
+        std::transform(slisten2.begin(),slisten2.end(),slisten2.begin(),[](unsigned char ch)
+        {
+            return std::tolower(ch);
+        });
+
+        std::unordered_map<char,int>umapAnagram;
+
+        for(auto ch : slisten)
+        {
+            umapAnagram[ch]++;
+        }
+
+        for(auto ch : slisten2)
+        {
+            if(umapAnagram[ch] == 0)
+            {
+                std::cout<<"No Anagram"<<std::endl;
+                return 0;
+            }
+            umapAnagram[ch]--;
+                
+        }
+        std::cout<<"Anagram"<<std::endl;
+}
+else
+{
+    std::cout<<"Not Anagram size"<<std::endl;
+    return 0;
+}
+
+
+    return 0;
+}
+
+
+
+/******************************************************************************
+
+                              Online C++ Compiler.
+               Code, Compile, Run and Debug C++ program online.
+Write your code in this editor and press "Run" button to compile and execute it.
+
+*******************************************************************************/
+
+#include <iostream>
+#include<map>
+#include<set>
+#include<unordered_map>
+#include<unordered_set>
+#include <algorithm>
+#include<string>
+#include<vector>
+
+int main()
+{
+//Count the number of unique charccter from string
+std::string s = "bhavesh bhavesh jk";
+
+//numbe of charcters = frwquncey menas number of charectie means key value pair
+
+std::unordered_map<char,int>umap;
+std::vector<char>objVec;
+for(auto ch : s)
+umap[ch]++;
+int count = 0;
+for(auto ch: s)
+{
+    if(umap[ch] == 1)
+    {
+        count++;
+        objVec.emplace_back(ch);
+    }
+    
+}
+
+std::cout<<"Number of unique is "<<count<<std::endl;
+for(auto ch: objVec)
+std::cout<<"Char is "<<ch<<"\t";
+
+
+//count the numr
+
+    return 0;
+}
+
+
+
+
+//String 
+
+/******************************************************************************
+
+                              Online C++ Compiler.
+               Code, Compile, Run and Debug C++ program online.
+Write your code in this editor and press "Run" button to compile and execute it.
+
+*******************************************************************************/
+
+#include <iostream>
+#include <string>
+#include <unordered_map>
+#include <unordered_set>
+#include <algorithm>
+#include <sstream>
+#include<vector>
+int main()
+{
+    //Count number of words of a string
+    
+    std::string st = "Bhavesh  Harish    Waghela";
+    int count = 0;
+    std::istringstream iss(st);
+    
+    std::vector<std::string>objWords ;
+    std::string words;
+    
+    while(iss>>words)
+    {
+        count++;
+        
+        objWords.emplace_back(words);
+        std::cout<<words<<"\t";
+    }
+
+    std::cout<<"\nNumber of words are"<<count<<std::endl;
+    
+    
+    //Using for loop and space:
+    
+    std::string stWithSpaces = "  Bhavesh Waghela   is   a    goood      guy    ";
+    auto start = std::find_if_not(stWithSpaces.begin(),stWithSpaces.end(),::isspace);
+    auto end = std::find_if_not(stWithSpaces.rbegin(),stWithSpaces.rend(),::isspace).
+    base();
+    
+    if(start >=end)
+    std::string empyt = "";       //All Spaces
+    
+    std::string newString(start,end);
+    
+    int iCount  = 0;
+    bool inWord = false;
+    
+for(char ch:stWithSpaces)
+{
+    if(std::isspace(ch))
+    {
+        inWord = false;     //Means you get the space here
+    }
+    else if(!inWord)        //Menas you got the space before and now you got the char
+    {
+       inWord = true;       //Start of a new words 
+    
+        iCount++;
+    }
+}
+
+std::cout<<"Word Count = "<<iCount<<std::endl;
+    return 0;
+}

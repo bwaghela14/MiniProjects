@@ -1,0 +1,287 @@
+#include<string>
+#include<iostream>
+#include<vector>
+#include<set>
+#include<unordered_set>
+#include<unordered_map>
+#include<algorithm>
+#include<sstream>
+#include <cctype>
+
+int main()
+{
+    std::string s = "Bhavesh is a good dad";
+    
+    // Reverse whole string
+    
+    std::reverse(s.begin(),s.end());
+    
+    std::cout<<"Reverse string is = "<<s<<std::endl;
+    
+    
+    // Reverse words in a stirng
+
+    std::string s2 = "Bhavesh is a good dad";    
+    std::istringstream iss(s2);
+    std::string word;
+    
+    std::ostringstream oss;
+    while( iss >> word )
+    {
+        std::reverse(word.begin(),word.end());
+        oss << word  ;
+    }
+    
+    std::string newString = oss.str();
+    newString.pop_back();
+    
+    
+    std::cout<<"NEw string after word reverse is = "<<newString<<std::endl;
+    
+    
+    // Reverse entire sentene word wise 
+    
+    std::string str3 = "Bhavesh is a good dad";
+    
+    
+    std::istringstream iss2(str3);
+    std::string words;
+    std::vector<std::string>objVec;
+    while(iss2 >> words)
+    {
+       objVec.emplace_back(words); 
+    }
+    
+    int l = 0 , r= objVec.size()-1;
+    while(l < r)
+    {
+        std::swap(objVec[l],objVec[r]);
+        l++;
+        r--;
+    }
+    std::ostringstream oss2;
+    for(auto it : objVec)
+    {
+        oss2  << it<<" " ;
+    }
+    
+    std::string reverseWordString = oss2.str();
+    reverseWordString.pop_back();
+    
+    std::cout<<"Reverse "<< reverseWordString<<std::endl;
+    
+    // Checlong if string is a palindrome
+    
+    std::string palindrome = "A man, a plan, a canal: Panama";
+    
+    std::transform(palindrome.begin(),palindrome.end(),palindrome.begin(),
+    [](unsigned char c){return std::tolower(c);});
+    
+    //Removing non alpha numberic chars
+    
+    palindrome.erase(std::remove_if(palindrome.begin(),palindrome.end(),
+    [](unsigned char c){return !std::isalnum(c);}),palindrome.end());
+    
+    
+    std::cout<<palindrome<<std::endl;
+    
+   int lhs = 0 , rhs = palindrome.size()-1;
+   
+   
+   bool breaked = false;
+   
+   while(lhs < rhs)
+   {
+       if(palindrome[lhs]!=palindrome[rhs])
+       {
+           breaked = true;
+           break;           
+       }
+
+       lhs++;
+       rhs--;
+   }
+   
+   if(breaked == false)
+   {
+       std::cout<<"Palindrome "<<std::endl;
+   }
+   else
+   {
+       std::cout<<"Not palindrome"<<std::endl;
+   }
+    
+    
+    //Remove duplicate charcacters
+    
+    
+    std::string sDuplicate = "bhavesh bhavesh";
+    
+    std::unordered_set<char>ust;
+    
+    std::string newUniqueString;
+    
+    for(auto ch : sDuplicate)
+    {
+        if(ch == ' ')continue;
+        if(!ust.count(ch))      //Inserting first occurence only
+       
+       { 
+        ust.insert(ch);
+        
+        newUniqueString+=ch;
+       }
+    }
+    
+    std::cout<<"new String = "<<newUniqueString<<std::endl;
+    
+    //Count frequency of characters:
+    
+    
+    std::string sFrequency = "bhavesh bhavesh";    
+    
+    std::unordered_map<char,int>umpFrq;
+    
+    for(auto ch : sFrequency)
+    {
+        if(ch!=' ')
+        umpFrq[ch]++;
+    }
+    
+    for(const auto&[ch,count]: umpFrq)
+    {
+        std::cout<<ch<< "  "<<count<<std::endl;
+    }
+    
+    //First non repeating character : 
+    std::string sNonRepeat = "!ybhaveshu bhuaveshj";
+    std::unordered_map<char, int>umpNonRepeat;
+    
+    
+    for(auto ch : sNonRepeat)
+    {
+        if(std::isalnum(static_cast<unsigned char>(ch)))       //excuding all char other 
+        //than alpha numeric
+        {
+            umpNonRepeat[ch]++;
+        }
+        
+    }
+    
+    bool bFound = false;
+    for(auto ch : sNonRepeat)
+    {
+        if(std::isalnum(static_cast<unsigned char>(ch)) && umpNonRepeat[ch] == 1)
+        {
+        std::cout<<"First non repaet char is = "<<ch<<std::endl;
+        bFound = true;
+        break;
+        }
+
+    }
+    
+    if(!bFound)
+    {
+        std::cout<<"All are repeating char"<<std::endl;
+    }
+    
+    // Check if anagram
+    
+    
+    std::string s11 = "rail safety";
+    std::string s21 = "fairy tales";
+    
+    std::sort(s11.begin(),s11.end());
+    std::sort(s21.begin(),s21.end());
+    
+    std::cout<< s11<<"\t"<<s21<<std::endl;
+    
+    if(s11 == s21)
+    std::cout<<"Anagram"<<std::endl;
+    else
+    {
+        std::cout<<"Not anagram"<<std::endl;
+    }
+    
+    //keep only Alphabets in string
+    
+    std::string alpha = "Bhavesh 1234&*^%";
+    std::string alpha2 = "  !!!1234&*^%BhaVEsh" ;
+    
+    
+    //Means we have to celan the string 
+    
+    alpha.erase(std::remove_if(alpha.begin(),alpha.end(),
+    [](unsigned char c){return !std::isalpha(c);}),alpha.end());
+    
+    alpha2.erase(std::remove_if(alpha2.begin(),alpha2.end(),
+    [](char c){return !std::isalpha(static_cast<unsigned char>(c));}),alpha2.end());
+    
+    std::transform(alpha.begin(),alpha.end(),alpha.begin(),
+    [](char c){return std::tolower(static_cast<unsigned char>(c));});
+    
+    std::transform(alpha2.begin(),alpha2.end(),alpha2.begin(),
+    [](char c){return std::tolower(static_cast<unsigned char>(c));});
+    
+    std::cout<<"Alpha after removal = "<<alpha<<"\t"<<alpha2<<std::endl;
+    
+    
+    if(alpha2 == alpha)
+    {
+        std::cout<<"Alpha anagram"<<std::endl;
+    }else
+    std::cout<<"NOt anagram"<<std::endl;
+    
+    
+    //Remove vowels
+    std::string removevowels = "aeiouAEIOU";
+    
+    constexpr std::string_view vowels = "aeiouAEIOU";
+    
+    removevowels.erase(std::remove_if(removevowels.begin(),removevowels.end(),
+    [vowels](char c) { 
+        return vowels.find(c)!=std::string_view::npos;} )
+        ,removevowels.end());
+    
+    
+    std::cout<<"Wthout vowles = "<<removevowels<<std::endl;
+    
+    //8. Longest substring without repeating characters
+    
+    
+//Longest substring without repeating characters
+
+//As substring comes we will work on sliding window with 2 pointers approach;
+//Repeating chareacters --->means we need to hasing --->But in sliding window we need to 
+//focus o index;
+
+std::string s = "abcddabac";
+
+int l = 0,r=0,maxlength = 0, n= s.size();
+std::unordered_map<char ,int>umpaFrq;
+
+while(r<n)
+{
+    //umpaFrq[s[r]]>=l ---->This we need to chek sliding window on rhs only ,because map
+    //mohgt have that char on lhs
+  if(umpaFrq.count(s[r]) && umpaFrq[s[r]]>=l)      //In if consition we need to conside l shofting
+  {
+      l = std::max(l , umpaFrq[s[r]]+1);                //-----moving l to next char of found char
+  }
+  
+  umpaFrq[s[r]] = r;
+  maxlength = std::max(maxlength , r-l+1);
+  r++;
+  std::cout<<"maxlength = "<<maxlength<<std::endl;;
+}
+     
+    
+    
+    
+    
+    
+    return 0;
+}
+
+
+

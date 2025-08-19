@@ -1,0 +1,103 @@
+/******************************************************************************
+
+                              Online C++ Compiler.
+               Code, Compile, Run and Debug C++ program online.
+Write your code in this editor and press "Run" button to compile and execute it.
+
+*******************************************************************************/
+
+#include <iostream>
+
+class Base
+{
+    public:
+    
+    Base(int i = 0):m_iBaseProtected(i)
+    {
+        std::cout<<"Base Cnstrtr"<<std::endl;
+    }
+    
+    virtual ~Base()
+    {
+        std::cout<<"Base Destrtr"<<std::endl;
+    }
+    
+    virtual void Display()
+    {
+        std::cout<<"Base Display  "<<m_iBaseProtected<<std::endl;
+    }
+    
+    virtual void show() = 0;
+    
+    protected:
+    
+    int m_iBaseProtected;
+    
+    private:
+    
+};
+
+class Derived : public Base
+{
+    public:
+    
+    Derived(int i = 0,int j = 0): Base(i), m_iDerivedProtected(j)
+    {
+        std::cout<<"Derived Cnstrtr"<<std::endl;
+    }
+    
+    virtual ~Derived()
+    {
+        std::cout<<"Derived Destrutr"<<std::endl;
+    }
+    
+    void Display()override
+    {
+        std::cout<<"Derived Display  "<<m_iBaseProtected<<"\t"<<m_iDerivedProtected<<std::endl;
+    }
+    
+    void show()override
+    {
+    std::cout<<"Overiden show in Derived Class"<<std::endl;    
+    }
+    
+    protected:
+    int m_iDerivedProtected;
+    
+    private:
+};
+
+//Allowing Slicing
+void showObjectSlicing(Base& obj)
+{
+    obj.Display();
+}
+
+//Dont allow slicing with reference
+// void showObjectSlicing(Base& obj)
+// {
+//     obj.Display();
+// }
+
+//Dont allow slicing with pointer
+// void showObjectSlicing(Base* obj)
+// {
+//     std::cout<<"With pointer"<<std::endl;
+//     obj->Display();
+// }
+
+//Best way to allow slicing is using abstract base class
+
+int main()
+{
+
+    // Base obj(30);
+    // showObjectSlicing(obj);
+    // showObjectSlicing(&obj);    
+    Derived dObj(40,50);        //Dervied obj will be sliced off here as it is copied to base obje as
+                                //So memory related to base is only present , memory for dervied part
+                                //is sliced off
+    showObjectSlicing(dObj);
+    // showObjectSlicing(&dObj);
+    return 0;
+}
